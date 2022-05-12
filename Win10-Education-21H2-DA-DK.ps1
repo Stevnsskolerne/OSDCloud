@@ -16,9 +16,9 @@ Import-Module OSD -Force
 
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Start OSDCloud"
-#Start-OSDCloud -OSLanguage da-dk -OSBuild "21H2" -OSEdition Education -ZTI
+Start-OSDCloud -OSLanguage da-dk -OSBuild "21H2" -OSEdition Education -ZTI
 
 #Restart from WinPE
 Write-Host  -ForegroundColor Green "Restarting in 20 seconds!"
 Start-Sleep -Seconds 20
-#wpeutil reboot
+wpeutil reboot
