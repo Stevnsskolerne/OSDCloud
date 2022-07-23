@@ -21,6 +21,8 @@ Start-OSDCloud -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Education -OSLan
 #Restart from WinPE
 Write-Host  -ForegroundColor Green "Removing ESD files..."
 Remove-Item -Path C:\OSDCloud\OS\*.esd -Recurse -Force
+Write-Host  -ForegroundColor Green "Patching registry for TPM fuctionality..."
+reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OOBE /v SetupDisplayedEula /t REG_DWORD /d 00000001 /f
 Write-Host  -ForegroundColor Green "Restarting in 20 seconds!"
 Start-Sleep -Seconds 20
 wpeutil reboot
