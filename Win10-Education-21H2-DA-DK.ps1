@@ -18,11 +18,13 @@ if ((Get-MyComputerModel) -match 'Virtual') {
 Write-Host  -ForegroundColor Green "Start OSDCloud"
 Start-OSDCloud -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Education -OSLanguage da-dk -OSLicense Volume -Firmware -ZTI
 
-#Restart from WinPE
+#Clean up ESD files
 Write-Host  -ForegroundColor Green "Removing ESD files..."
 Remove-Item -Path C:\OSDCloud\OS\*.esd -Recurse -Force
+#Patch reg for TPM to function 
 Write-Host  -ForegroundColor Green "Patching registry for TPM fuctionality..."
 reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OOBE /v SetupDisplayedEula /t REG_DWORD /d 00000001 /f
+#Restart from WinPE
 Write-Host  -ForegroundColor Green "Restarting in 20 seconds!"
 Start-Sleep -Seconds 20
 wpeutil reboot
