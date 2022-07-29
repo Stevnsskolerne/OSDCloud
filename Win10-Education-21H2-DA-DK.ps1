@@ -18,17 +18,21 @@ if ((Get-MyComputerModel) -match 'Virtual') {
 #Get file from github
 Write-Host -ForegroundColor Green "Requesting custom PowerShell files from GitHub..."
 Invoke-WebRequest -Uri https://raw.githubusercontent.com/Stevnsskolerne/OSDCloud/dev/OSD.WinPE.ps1 -OutFile $env:TEMP\OSD.WinPE.ps1
+Start-Sleep -Seconds 20
 #Get path to OSD module on X:
 Write-Host -ForegroundColor Green "Getting OSD module path..."
-$modPath = Get-Module -Name OSD -ListAvailable
+$modPath = (Get-Module -Name OSD -ListAvailable).ModuleBase
 $modPath
+Start-Sleep -Seconds 20
 #Make path to latest version of module and add public to path
 Write-Host -ForegroundColor Green "Calculating path..."
 $modReplacePath = $modPath[0] + "\Public"
 $modReplacePath
+Start-Sleep -Seconds 20
 #Copy ps from temp to replacement path
 Write-Host -ForegroundColor Green "Moving file from" + $env:TEMP + "to" + $modReplacePath
 Copy-Item -Path $env:TEMP\OSD.WinPE.ps1 -Destination $modReplacePath -Force -Verbose
+Start-Sleep -Seconds 20
 
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Start OSDCloud"
