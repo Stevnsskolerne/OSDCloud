@@ -42,7 +42,7 @@ Start-OSDCloud -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Education -OSLan
 Write-Host  -ForegroundColor Green "Removing ESD files..."
 Remove-Item -Path C:\OSDCloud\OS\*.esd -Recurse -Force
 #Replace OSD.WinPE.ps1 with custom version from github - (Win)
-Copy-Item -Path $env:TEMP\OSD.WinPE.ps1 -Destination "C:\Program Files\WindowsPowerShell\Modules\OSD\22.7.12.1\Public" -Force -Verbose
+Copy-Item -Path $env:TEMP\OSD.WinPE.ps1 -Destination ($modReplacePath.Replace('X:','C:')) -Force -Verbose
 #Patch reg for TPM to function 
 #Write-Host  -ForegroundColor Green "Patching registry for TPM fuctionality..."
 #reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OOBE /v SetupDisplayedEula /t REG_DWORD /d 00000001 /f
