@@ -14,6 +14,22 @@ if ((Get-MyComputerModel) -match 'Virtual') {
 #Write-Host  -ForegroundColor Green "Importing OSD PowerShell Module"
 #Import-Module OSD -Force
 
+#Replace OSD.WinPE.ps1 with custom version from github - (WinPE)
+#Get file from github
+Write-Host -ForegroundColor Green "Requesting custom PowerShell files from GitHub..."
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/Stevnsskolerne/OSDCloud/dev/OSD.WinPE.ps1 -OutFile $env:TEMP\OSD.WinPE.ps1
+#Get path to OSD module on X:
+Write-Host -ForegroundColor Green "Getting OSD module path..."
+$modPath = Get-Module -Name OSD -ListAvailable
+$modPath
+#Make path to latest version of module and add public to path
+Write-Host -ForegroundColor Green "Calculating path..."
+$modReplacePath = $modPath[0] + "\Public"
+$modReplacePath
+#Copy ps from temp to replacement path
+Write-Host -ForegroundColor Green "Moving file from" + $env:TEMP + "to" + $modReplacePath
+Copy-Item -Path $env:TEMP\OSD.WinPE.ps1 -Destination $modReplacePath -Force -Verbose
+
 #Start OSDCloud ZTI the RIGHT way
 Write-Host  -ForegroundColor Green "Start OSDCloud"
 Start-OSDCloud -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Education -OSLanguage da-dk -OSLicense Volume -Firmware -ZTI
@@ -22,8 +38,8 @@ Start-OSDCloud -OSVersion 'Windows 10' -OSBuild 21H2 -OSEdition Education -OSLan
 Write-Host  -ForegroundColor Green "Removing ESD files..."
 Remove-Item -Path C:\OSDCloud\OS\*.esd -Recurse -Force
 #Patch reg for TPM to function 
-Write-Host  -ForegroundColor Green "Patching registry for TPM fuctionality..."
-reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OOBE /v SetupDisplayedEula /t REG_DWORD /d 00000001 /f
+#Write-Host  -ForegroundColor Green "Patching registry for TPM fuctionality..."
+#reg add HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OOBE /v SetupDisplayedEula /t REG_DWORD /d 00000001 /f
 #Restart from WinPE
 Write-Host  -ForegroundColor Green "Restarting in 20 seconds!"
 Start-Sleep -Seconds 20
