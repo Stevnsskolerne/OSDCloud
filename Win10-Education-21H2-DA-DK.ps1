@@ -30,7 +30,7 @@ $modReplacePath = $modPath[0] + "\Public"
 $modReplacePath
 Start-Sleep -Seconds 20
 #Copy ps from temp to replacement path
-Write-Host -ForegroundColor Green "Moving file from" + $env:TEMP + "to" + $modReplacePath
+Write-Host -ForegroundColor Green "Moving file from" $env:TEMP "to" $modReplacePath
 Copy-Item -Path $env:TEMP\OSD.WinPE.ps1 -Destination $modReplacePath -Force -Verbose
 Start-Sleep -Seconds 20
 
